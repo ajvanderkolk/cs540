@@ -1,0 +1,151 @@
+def succ(self, state):
+        """ Generate the successors of the current state
+
+        Args:
+            state (list of lists): should be the current state of the game as saved in
+                this TeekoPlayer object. Note that this is NOT assumed to be a copy of
+                the game state and should NOT be modified within this method (use
+                place_piece() instead). Any modifications (e.g. to generate successors)
+                should be done on a deep copy of the state.
+
+        Returns:
+            list of lists: a list of the successor states of the current state
+        """
+        succ = []
+
+        # drop phase successors
+        if self.get_drop_phase(state):
+            for i in range(5):
+                for j in range(5):
+                    if state[i][j] == ' ':
+                        next_state = [row[:] for row in state]
+                        next_state[i][j] = self.my_piece
+
+                        succ.append(next_state)
+            return succ
+        
+        # move phase successors
+        else:
+            for i in range(5):
+                for j in range(5):
+                    if state[i][j] == self.my_piece:
+                        # check and store all possible moves from this piece
+                        if i > 0:
+                            # upper left
+                            if j > 0 and state[i-1][j-1] == ' ':
+                                next_state = [row[:] for row in state]
+                                next_state[i][j] = ' '
+                                next_state[i-1][j] = self.my_piece
+                                succ.append(next_state)
+                            # upper middle
+                            if state[i-1][j] == ' ':
+                                next_state = [row[:] for row in state]
+                                next_state[i][j] = ' '
+                                next_state[i-1][j] = self.my_piece
+                                succ.append(next_state)
+                            # upper right
+                            if j < 4 and state[i-1][j+1] == ' ':
+                                next_state = [row[:] for row in state]
+                                next_state[i][j] = ' '
+                                next_state[i-1][j] = self.my_piece
+                                succ.append(next_state)
+                        # middle left
+                        if j > 0 and state[i][j-1] == ' ':
+                                next_state = [row[:] for row in state]
+                                next_state[i][j] = ' '
+                                next_state[i][j-1] = self.my_piece
+                                succ.append(next_state)
+                        # middle right
+                        if j < 4 and state[i][j+1] == ' ':
+                                next_state = [row[:] for row in state]
+                                next_state[i][j] = ' '
+                                next_state[i][j+1] = self.my_piece
+                                succ.append(next_state)
+                        if i < 4:
+                            # lower left
+                            if j > 0 and state[i+1][j-1] == ' ':
+                                next_state = [row[:] for row in state]
+                                next_state[i][j] = ' '
+                                next_state[i+1][j] = self.my_piece
+                                succ.append(next_state)
+                            # lower middle
+                            if state[i+1][j] == ' ': 
+                                next_state = [row[:] for row in state]
+                                next_state[i][j] = ' '
+                                next_state[i+1][j] = self.my_piece
+                                succ.append(next_state)
+                            # lower right
+                            if j < 4 and state[i+1][j+1] == ' ':
+                                next_state = [row[:] for row in state]
+                                next_state[i][j] = ' '
+                                next_state[i+1][j] = self.my_piece
+                                succ.append(next_state)
+        return succ
+
+    def succ(self, state):
+        """ Generate the successors of the current state
+
+        Args:
+            state (list of lists): should be the current state of the game as saved in
+                this TeekoPlayer object. Note that this is NOT assumed to be a copy of
+                the game state and should NOT be modified within this method (use
+                place_piece() instead). Any modifications (e.g. to generate successors)
+                should be done on a deep copy of the state.
+
+        Returns:
+            list of lists: a list of the successor states of the current state
+        """
+        succ = []
+
+        # drop phase successors
+        if self.get_drop_phase(state):
+            for i in range(5):
+                for j in range(5):
+                    if state[i][j] == ' ':
+                        next_state = [row[:] for row in state]
+                        next_state[i][j] = self.my_piece
+
+                        succ.append(next_state)
+            return succ
+        
+        # move phase successors
+        else:
+            for i in range(5):
+                for j in range(5):
+                    if state[i][j] == self.my_piece:
+                        # check and store all possible moves from this piece
+                        if i > 0:
+                            # upper left
+                            if j > 0 and state[i-1][j-1] == ' ':
+                                next_state = [(i,i),(i-1,j-1)]
+                                succ.append(next_state)
+                            # upper middle
+                            if state[i-1][j] == ' ':
+                                next_state = [(i,i),(i-1,j)]
+                                succ.append(next_state)
+                            # upper right
+                            if j < 4 and state[i-1][j+1] == ' ':
+                                next_state = [(i,i),(i-1,j+1)]
+                                succ.append(next_state)
+                        # middle left
+                        if j > 0 and state[i][j-1] == ' ':
+                                next_state = [(i,i),(i,j-1)]
+                                succ.append(next_state)
+                        # middle right
+                        if j < 4 and state[i][j+1] == ' ':
+                                next_state = [(i,i),(i,j+1)]
+                                succ.append(next_state)
+                        if i < 4:
+                            # lower left
+                            if j > 0 and state[i+1][j-1] == ' ':
+                                next_state = [(i,i),(i+1,j-1)]
+                                succ.append(next_state)
+                            # lower middle
+                            if state[i+1][j] == ' ':
+                                next_state = [(i,i),(i+1,j)]
+                                succ.append(next_state)
+                            # lower right
+                            if j < 4 and state[i+1][j+1] == ' ':
+                                next_state = [(i,i),(i+1,j+1)]
+                                succ.append(next_state)
+        return succ
